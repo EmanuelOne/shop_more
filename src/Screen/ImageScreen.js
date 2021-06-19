@@ -5,6 +5,7 @@ import { Pagination, PageBox } from "../styled-components/pagination";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import axios from "axios";
 import { pagination } from "../components/pagination";
+import { productsUrl } from "../string";
 const ImageScreen = ({ history, location }) => {
   const [data, setData] = useState({});
   const [isLoading, setisLoading] = useState(true);
@@ -25,9 +26,7 @@ const ImageScreen = ({ history, location }) => {
   useEffect(() => {
     if (!data.products) {
       axios
-        .get(
-          `http://localhost:5000/api/products?page=${pageQuery}&category=${categoryQuery}`
-        )
+        .get(`${productsUrl}?page=${pageQuery}&category=${categoryQuery}`)
         .then((res) => {
           setData(res.data);
           setisLoading(false);
@@ -43,9 +42,7 @@ const ImageScreen = ({ history, location }) => {
     // console.log();
     setisLoading(true);
     axios
-      .get(
-        `http://localhost:5000/api/products?page=${pageQuery}&category=${categoryQuery}`
-      )
+      .get(`${productsUrl}?page=${pageQuery}&category=${categoryQuery}`)
       .then((res) => {
         if (type) history.push(`/?page=${1}&category=${categoryQuery}`);
         // else if (!type && categoryQuery)
@@ -69,9 +66,7 @@ const ImageScreen = ({ history, location }) => {
     }
     setisLoading(true);
     axios
-      .get(
-        `http://localhost:5000/api/products?page=${pageQuery}&category=${categoryQuery}`
-      )
+      .get(`${productsUrl}page=${pageQuery}&category=${categoryQuery}`)
       .then((res) => {
         history.push(`/?page=${pageQuery}&category=${categoryQuery}`);
         setData(res.data);
