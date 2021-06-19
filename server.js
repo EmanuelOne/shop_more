@@ -9,9 +9,11 @@ import categoryRoute from "./routes/categoryRoute.js";
 import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 dotenv.config();
+import path from "path";
 
 connectDB();
 
+const __dirname = path.resolve();
 const app = express();
 app.use(cors());
 
@@ -28,14 +30,20 @@ app.use(express.json());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoute);
-app.get("/", (req, res) => {
-  res.send("API is running....");
-});
 
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+  );
+} else
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
 
 app.listen(
   PORT,

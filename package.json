@@ -7,8 +7,9 @@
   "scripts": {
     "start": "node ./server",
     "server": "nodemon ./server",
-    "client": "cd ./frontend && npm start",
+    "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client npm run build --prefix clien",
     "data:import": "node ./seeder",
     "data:destroy": "node ./seeder -d"
   },
